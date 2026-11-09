@@ -60,9 +60,10 @@ export function TimeSlot({ label = '16:30', state = 'Default', onSelect }: TimeS
 type InputProps = {
   label?: string
   placeholder?: string
-  state?: 'Default' | 'Focus'
+  state?: 'Default' | 'Focus' | 'Error'
   value?: string
   onChange?: (value: string) => void
+  error?: string
 }
 
 export function Input({
@@ -71,6 +72,7 @@ export function Input({
   state = 'Default',
   value = '',
   onChange,
+  error,
 }: InputProps) {
   return (
     <label className="ds-input" data-node-id={state === 'Focus' ? '6:19' : '6:15'}>
@@ -82,7 +84,10 @@ export function Input({
         value={value}
         onChange={(event) => onChange?.(event.target.value)}
         aria-label={label}
+        aria-invalid={state === 'Error'}
+        aria-describedby={error ? `${label.toLowerCase().replaceAll(' ', '-')}-error` : undefined}
       />
+      {error && <span className="ds-input__error" id={`${label.toLowerCase().replaceAll(' ', '-')}-error`}>{error}</span>}
     </label>
   )
 }
@@ -107,6 +112,7 @@ export function TopBar({ step = 'Step 1 of 3', title = 'Book a repair', onBack }
 
 type ServiceCardProps = {
   description?: string
+  duration?: string
   price?: string
   state?: 'Default' | 'Selected'
   title?: string
@@ -114,6 +120,7 @@ type ServiceCardProps = {
 
 export function ServiceCard({
   description = 'Tube or tyre swap, any wheel size.',
+  duration = '30 min',
   price = '€15',
   state = 'Default',
   title = 'Flat tyre repair',
@@ -126,7 +133,7 @@ export function ServiceCard({
       </div>
       <p>{description}</p>
       <div className="ds-service-card__tags">
-        <Tag />
+        <Tag label={duration} />
       </div>
     </article>
   )
@@ -146,10 +153,10 @@ export function SummaryRow({ label = 'Service', value = 'Flat tyre repair' }: Su
   )
 }
 
-export function ActionBar({ onBook }: { onBook?: () => void }) {
+export function ActionBar({ label = 'Book this repair', onBook }: { label?: string; onBook?: () => void }) {
   return (
     <div className="ds-action-bar" data-node-id="11:37">
-      <Button label="Book this repair" onClick={onBook} />
+      <Button label={label} onClick={onBook} />
     </div>
   )
 }
@@ -159,42 +166,80 @@ export function ComponentsOverview() {
   const [selectedTime, setSelectedTime] = useState('16:30')
   const [name, setName] = useState('')
   const [lastAction, setLastAction] = useState('')
+  const [query, setQuery] = useState('')
+  const [activeFilter, setActiveFilter] = useState('All')
 
   const recordAction = (action: string) => setLastAction(action)
+  const matches = (category: string, name: string) =>
+    (activeFilter === 'All' || activeFilter === category) &&
+    name.toLowerCase().includes(query.toLowerCase())
+
+  const filters = ['All', 'Actions', 'Forms', 'Navigation', 'Cards']
 
   return (
     <main className="components-overview">
-      <section className="components-overview__group components-overview__group--buttons">
+      <header className="components-overview__header">
+        <div>
+          <p className="components-overview__eyebrow">Spoke / UI library</p>
+          <h1>Components</h1>
+          <p>Filter the production-ready building blocks used across the booking flow.</p>
+        </div>
+        <label className="components-overview__search">
+          <span>Search components</span>
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by name" />
+        </label>
+      </header>
+
+      <nav className="components-overview__filters" aria-label="Filter components">
+        {filters.map((filter) => (
+          <button
+            className={activeFilter === filter ? 'is-active' : ''}
+            key={filter}
+            type="button"
+            onClick={() => setActiveFilter(filter)}
+            aria-pressed={activeFilter === filter}
+          >
+            {filter}
+          </button>
+        ))}
+      </nav>
+
+      <p className="components-overview__result-count" aria-live="polite">
+        {query || activeFilter !== 'All' ? `Showing filtered results for ${query || activeFilter}` : '8 component patterns'}
+      </p>
+
+      {matches('Actions', 'Button') && <section className="components-overview__group components-overview__group--buttons">
         <h2>Button</h2>
         <div className="components-overview__row">
           <Button onClick={() => recordAction('Primary button activated')} />
           <Button variant="Secondary" onClick={() => recordAction('Secondary button activated')} />
         </div>
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--time-slots">
+      {matches('Actions', 'Time slot') && <section className="components-overview__group components-overview__group--time-slots">
         <h2>Time slot</h2>
         <div className="components-overview__row">
           <TimeSlot state={selectedTime === '16:30' ? 'Selected' : 'Default'} onSelect={() => setSelectedTime('16:30')} />
           <TimeSlot label="17:00" state={selectedTime === '17:00' ? 'Selected' : 'Default'} onSelect={() => setSelectedTime('17:00')} />
           <TimeSlot state="Disabled" />
         </div>
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--inputs">
+      {matches('Forms', 'Input') && <section className="components-overview__group components-overview__group--inputs">
         <h2>Input</h2>
         <div className="components-overview__row">
           <Input value={name} onChange={setName} />
           <Input state="Focus" value={name} onChange={setName} />
+          <Input state="Error" label="Email" placeholder="name@example.com" error="Enter a valid email address." />
         </div>
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--top-bar">
+      {matches('Navigation', 'Top bar') && <section className="components-overview__group components-overview__group--top-bar">
         <h2>Top bar</h2>
         <TopBar onBack={() => recordAction('Back button activated')} />
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--service-card">
+      {matches('Cards', 'Service card') && <section className="components-overview__group components-overview__group--service-card">
         <h2>Service card</h2>
         <div className="components-overview__row">
           <button className="components-overview__service-trigger" type="button" onClick={() => setSelectedService('Default')}>
@@ -204,17 +249,17 @@ export function ComponentsOverview() {
             <ServiceCard state={selectedService === 'Selected' ? 'Selected' : 'Default'} />
           </button>
         </div>
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--summary">
+      {matches('Cards', 'Summary row') && <section className="components-overview__group components-overview__group--summary">
         <h2>Summary row</h2>
         <SummaryRow />
-      </section>
+      </section>}
 
-      <section className="components-overview__group components-overview__group--action-bar">
+      {matches('Actions', 'Action bar') && <section className="components-overview__group components-overview__group--action-bar">
         <h2>Action bar</h2>
         <ActionBar onBook={() => recordAction('Booking action activated')} />
-      </section>
+      </section>}
       <p className="sr-only" aria-live="polite">{lastAction}</p>
     </main>
   )

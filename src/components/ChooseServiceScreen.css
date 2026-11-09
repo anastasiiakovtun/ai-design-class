@@ -1,0 +1,73 @@
+.choose-service-screen {
+  display: flex;
+  flex-direction: column;
+  width: 390px;
+  min-height: 820px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+.choose-service-screen__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-20);
+}
+
+.choose-service-screen__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.choose-service-screen__header h1,
+.choose-service-screen__header p {
+  margin: 0;
+}
+
+.choose-service-screen__header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 34px;
+}
+
+.choose-service-screen__header p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.choose-service-screen__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.choose-service-screen__service {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.choose-service-screen__service .ds-service-card {
+  width: 100%;
+}
+
+.choose-service-screen__service:focus-visible {
+  outline: 3px solid var(--color-accent-soft);
+  outline-offset: 3px;
+}
+
+.choose-service-screen > .ds-action-bar {
+  flex-shrink: 0;
+}
