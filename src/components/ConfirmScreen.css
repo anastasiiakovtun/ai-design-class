@@ -48,3 +48,11 @@
   font-size: var(--font-size-slot);
   line-height: var(--line-height-slot);
 }
+
+.confirm-screen__success {
+  margin: 0;
+  color: var(--color-accent-strong);
+  font-size: var(--font-size-slot);
+  font-weight: 500;
+  line-height: var(--line-height-slot);
+}

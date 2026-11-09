@@ -240,6 +240,10 @@
   border: 2px solid var(--color-accent);
 }
 
+.ds-input__field:focus:not(.ds-input__field--error) {
+  border: 2px solid var(--color-accent);
+}
+
 .ds-input__field--error {
   border: 2px solid var(--color-accent-strong);
 }

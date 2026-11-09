@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type Ref } from 'react'
 import chevronLeft from '../assets/chevron-left.svg'
 import './ComponentsOverview.css'
 
@@ -66,6 +66,7 @@ type InputProps = {
   onChange?: (value: string) => void
   error?: string
   type?: 'text' | 'tel'
+  inputRef?: Ref<HTMLInputElement>
 }
 
 export function Input({
@@ -76,6 +77,7 @@ export function Input({
   onChange,
   error,
   type = 'text',
+  inputRef,
 }: InputProps) {
   return (
     <label className="ds-input" data-node-id={state === 'Focus' ? '6:19' : '6:15'}>
@@ -86,6 +88,7 @@ export function Input({
         placeholder={placeholder}
         value={value}
         type={type}
+        ref={inputRef}
         onChange={(event) => onChange?.(event.target.value)}
         aria-label={label}
         aria-invalid={state === 'Error'}
