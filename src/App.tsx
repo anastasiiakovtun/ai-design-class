@@ -1,10 +1,10 @@
-import { BookingCard } from './components/BookingCard'
+import { ComponentsOverview } from './components/ComponentsOverview'
 import './App.css'
 
 function App() {
   return (
     <main className="app-shell">
-      <BookingCard />
+      <ComponentsOverview />
     </main>
   )
 }

@@ -1,8 +1,8 @@
 .app-shell {
-  display: grid;
+  display: flex;
   min-height: 100svh;
-  place-items: center;
-  padding: 24px;
+  justify-content: center;
+  padding: var(--space-32);
   box-sizing: border-box;
   background: var(--color-page);
 }
