@@ -262,6 +262,11 @@
 .ds-input__field::placeholder {
   color: var(--color-text-muted);
   opacity: 1;
+  transition: opacity var(--motion-fast);
+}
+
+.ds-input__field:focus::placeholder {
+  opacity: 0;
 }
 
 .ds-top-bar {
@@ -284,6 +289,13 @@
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
+}
+
+.ds-top-bar__back-placeholder {
+  display: block;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
 }
 
 .ds-top-bar__back img {

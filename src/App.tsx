@@ -14,6 +14,7 @@ function App() {
   }
 
   const [view, setView] = useState(getView)
+  const [selectedService, setSelectedService] = useState({ title: 'Flat tyre repair', duration: '30 min', price: '€15' })
   const [selectedDay, setSelectedDay] = useState('Today')
   const [selectedTime, setSelectedTime] = useState('16:30')
 
@@ -38,14 +39,32 @@ function App() {
         </div>
       </nav>
       {view === 'components' ? <ComponentsOverview /> : view === 'service' ? (
-        <ChooseServiceScreen onContinue={() => navigate('slot')} />
+        <ChooseServiceScreen onContinue={(service) => {
+          const serviceDetails = {
+            'Flat tyre repair': { title: 'Flat tyre repair', duration: '30 min', price: '€15' },
+            'Brake check and adjust': { title: 'Brake check and adjust', duration: '45 min', price: '€25' },
+            'Gear tune-up': { title: 'Gear tune-up', duration: '45 min', price: '€30' },
+            'Full service': { title: 'Full service', duration: '2 hours', price: '€89' },
+          }[service as 'Flat tyre repair' | 'Brake check and adjust' | 'Gear tune-up' | 'Full service']
+          if (serviceDetails) setSelectedService(serviceDetails)
+          navigate('slot')
+        }} />
       ) : view === 'slot' ? (
         <PickSlotScreen
           onBack={() => navigate('service')}
+          serviceTitle={selectedService.title}
+          serviceDuration={selectedService.duration}
           onContinue={(day, time) => { setSelectedDay(day); setSelectedTime(time); navigate('confirm') }}
         />
       ) : (
-        <ConfirmScreen selectedDay={selectedDay} selectedTime={selectedTime} onBack={() => navigate('slot')} />
+        <ConfirmScreen
+          selectedDay={selectedDay}
+          selectedTime={selectedTime}
+          serviceTitle={selectedService.title}
+          servicePrice={selectedService.price}
+          onBack={() => navigate('slot')}
+          onHome={() => navigate('service')}
+        />
       )}
     </div>
   )

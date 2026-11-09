@@ -5,9 +5,11 @@ import './PickSlotScreen.css'
 type PickSlotScreenProps = {
   onBack?: () => void
   onContinue?: (day: string, time: string) => void
+  serviceTitle?: string
+  serviceDuration?: string
 }
 
-export function PickSlotScreen({ onBack, onContinue }: PickSlotScreenProps) {
+export function PickSlotScreen({ onBack, onContinue, serviceTitle = 'Flat tyre repair', serviceDuration = '30 min' }: PickSlotScreenProps) {
   const [day, setDay] = useState('Today')
   const [time, setTime] = useState('16:30')
 
@@ -17,7 +19,7 @@ export function PickSlotScreen({ onBack, onContinue }: PickSlotScreenProps) {
       <section className="pick-slot-screen__content" aria-labelledby="pick-slot-title">
         <header className="pick-slot-screen__header">
           <h1 id="pick-slot-title">Pick a drop-off time</h1>
-          <p>Flat tyre repair, about 30 minutes</p>
+          <p>{serviceTitle}, about {serviceDuration}</p>
         </header>
 
         <fieldset className="pick-slot-screen__group">

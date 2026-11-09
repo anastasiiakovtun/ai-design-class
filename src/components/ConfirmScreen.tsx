@@ -4,11 +4,37 @@ import './ConfirmScreen.css'
 
 type ConfirmScreenProps = {
   onBack?: () => void
+  onHome?: () => void
   selectedDay?: string
   selectedTime?: string
+  serviceTitle?: string
+  servicePrice?: string
 }
 
-export function ConfirmScreen({ onBack, selectedDay = 'Today', selectedTime = '16:30' }: ConfirmScreenProps) {
+function SuccessPanel() {
+  return (
+    <section className="confirm-screen__success-panel" aria-labelledby="booking-confirmed-title">
+      <div className="confirm-screen__success-icon" aria-hidden="true">✓</div>
+      <h2 id="booking-confirmed-title">You’re all set!</h2>
+      <p>Your booking is confirmed.</p>
+    </section>
+  )
+}
+
+function NextSteps() {
+  return (
+    <section className="confirm-screen__next-steps" aria-labelledby="next-steps-title">
+      <h2 id="next-steps-title">What happens next</h2>
+      <ol>
+        <li>Bring your bike to Spoke today.</li>
+        <li>We’ll text you when your bike is ready.</li>
+        <li>Pay €15 when you pick it up.</li>
+      </ol>
+    </section>
+  )
+}
+
+export function ConfirmScreen({ onBack, onHome, selectedDay = 'Today', selectedTime = '16:30', serviceTitle = 'Flat tyre repair', servicePrice = '€15' }: ConfirmScreenProps) {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [submitted, setSubmitted] = useState(false)
@@ -37,24 +63,44 @@ export function ConfirmScreen({ onBack, selectedDay = 'Today', selectedTime = '1
 
   return (
     <main className="confirm-screen" data-node-id="7:128">
-      <TopBar step="Step 3 of 3" onBack={onBack} />
+      <TopBar step={confirmed ? 'Complete' : 'Step 3 of 3'} onBack={onBack} />
       <section className="confirm-screen__content" aria-labelledby="confirm-title">
         <header className="confirm-screen__header">
           <h1 id="confirm-title">Check and confirm</h1>
         </header>
 
-        <section className="confirm-screen__summary" aria-label="Booking summary">
-          <SummaryRow />
-          <SummaryRow label="Drop-off" value={`${selectedDay} at ${selectedTime}`} />
-          <SummaryRow label="Price" value="€15, pay at pick-up" />
-        </section>
+        {confirmed ? (
+          <>
+            <SuccessPanel />
 
-        <Input label="Your name" placeholder="First and last name" value={name} onChange={setName} state={nameError ? 'Error' : focusedField === 'name' ? 'Focus' : 'Default'} error={nameError} inputRef={nameRef} onFocus={() => setFocusedField('name')} onBlur={() => { setFocusedField(null); setTouchedName(true) }} />
-        <Input label="Phone number" placeholder="+32 470 12 34 56" value={phone} onChange={setPhone} state={phoneError ? 'Error' : focusedField === 'phone' ? 'Focus' : 'Default'} type="tel" error={phoneError} inputRef={phoneRef} onFocus={() => setFocusedField('phone')} onBlur={() => { setFocusedField(null); setTouchedPhone(true) }} />
-        <p className="confirm-screen__helper">We text you when your bike is ready. You pay when you pick it up.</p>
-        {confirmed && <p className="confirm-screen__success" role="status">Booking confirmed. We’ll text you when your bike is ready.</p>}
+            <section className="confirm-screen__summary" aria-label="Booking summary">
+              <SummaryRow value={serviceTitle} />
+              <SummaryRow label="Drop-off" value={`${selectedDay} at ${selectedTime}`} />
+              <SummaryRow label="Price" value={`${servicePrice}, pay at pick-up`} />
+            </section>
+
+            <NextSteps />
+
+            <p className="confirm-screen__reference" role="status">
+              <span>Booking reference</span>
+              <strong>SPK-1048</strong>
+            </p>
+          </>
+        ) : (
+          <>
+            <section className="confirm-screen__summary" aria-label="Booking summary">
+              <SummaryRow value={serviceTitle} />
+              <SummaryRow label="Drop-off" value={`${selectedDay} at ${selectedTime}`} />
+              <SummaryRow label="Price" value={`${servicePrice}, pay at pick-up`} />
+            </section>
+
+            <Input label="Your name" placeholder="First and last name" value={name} onChange={setName} state={nameError ? 'Error' : focusedField === 'name' ? 'Focus' : 'Default'} error={nameError} inputRef={nameRef} onFocus={() => setFocusedField('name')} onBlur={() => { setFocusedField(null); setTouchedName(true) }} />
+            <Input label="Phone number" placeholder="+32 470 12 34 56" value={phone} onChange={setPhone} state={phoneError ? 'Error' : focusedField === 'phone' ? 'Focus' : 'Default'} type="tel" error={phoneError} inputRef={phoneRef} onFocus={() => setFocusedField('phone')} onBlur={() => { setFocusedField(null); setTouchedPhone(true) }} />
+            <p className="confirm-screen__helper">We text you when your bike is ready. You pay when you pick it up.</p>
+          </>
+        )}
       </section>
-      <ActionBar label={confirmed ? 'Booking confirmed' : 'Confirm booking'} onBook={confirmed ? undefined : handleConfirm} disabled={confirmed} />
+      <ActionBar label={confirmed ? 'Back to home' : 'Confirm booking'} onBook={confirmed ? onHome : handleConfirm} />
     </main>
   )
 }

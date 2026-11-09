@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 390px;
   min-height: 820px;
-  overflow: hidden;
+  overflow-y: auto;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
   color: var(--color-text);
@@ -55,4 +55,97 @@
   font-size: var(--font-size-slot);
   font-weight: 500;
   line-height: var(--line-height-slot);
+}
+
+.confirm-screen__success-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-20) var(--space-16);
+  border: 1px solid #b9ddc7;
+  border-radius: var(--radius-card);
+  background: #eef8f1;
+  text-align: center;
+}
+
+.confirm-screen__success-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 50%;
+  background: #237a45;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.confirm-screen__success-panel h2,
+.confirm-screen__success-panel p,
+.confirm-screen__next-steps h2,
+.confirm-screen__next-steps ol,
+.confirm-screen__reference {
+  margin: 0;
+}
+
+.confirm-screen__success-panel h2 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+.confirm-screen__success-panel p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.confirm-screen__next-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.confirm-screen__next-steps h2 {
+  font-size: var(--font-size-title);
+  line-height: var(--line-height-title);
+}
+
+.confirm-screen__next-steps ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-left: 22px;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-slot);
+  line-height: var(--line-height-slot);
+}
+
+.confirm-screen__reference {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-slot);
+  line-height: var(--line-height-slot);
+}
+
+.confirm-screen__reference strong {
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .confirm-screen__success-icon {
+    animation: confirm-screen-success-pop 320ms ease-out both;
+  }
+}
+
+@keyframes confirm-screen-success-pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

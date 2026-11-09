@@ -19,7 +19,7 @@ export function ChooseServiceScreen({ onContinue }: ChooseServiceScreenProps) {
 
   return (
     <main className="choose-service-screen" data-node-id="7:114">
-      <TopBar onBack={() => setMessage('Back navigation activated')} />
+      <TopBar showBack={false} />
       <section className="choose-service-screen__content" aria-labelledby="choose-service-title">
         <header className="choose-service-screen__header">
           <h1 id="choose-service-title">Choose a service</h1>
