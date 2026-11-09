@@ -9,7 +9,11 @@ const services = [
   { title: 'Full service', description: 'Everything checked, cleaned and adjusted.', price: '€89', duration: '2 hours' },
 ]
 
-export function ChooseServiceScreen() {
+type ChooseServiceScreenProps = {
+  onContinue?: (service: string) => void
+}
+
+export function ChooseServiceScreen({ onContinue }: ChooseServiceScreenProps) {
   const [selectedService, setSelectedService] = useState(services[0].title)
   const [message, setMessage] = useState('')
 
@@ -42,7 +46,7 @@ export function ChooseServiceScreen() {
           ))}
         </ul>
       </section>
-      <ActionBar label="Continue" onBook={() => setMessage(`Continue with ${selectedService}`)} />
+      <ActionBar label="Continue" onBook={() => { setMessage(`Continue with ${selectedService}`); onContinue?.(selectedService) }} />
       <p className="sr-only" aria-live="polite">{message}</p>
     </main>
   )

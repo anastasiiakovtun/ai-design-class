@@ -51,6 +51,7 @@ export function TimeSlot({ label = '16:30', state = 'Default', onSelect }: TimeS
       disabled={state === 'Disabled'}
       type="button"
       onClick={onSelect}
+      aria-pressed={state === 'Selected'}
     >
       {label}
     </button>
@@ -64,6 +65,7 @@ type InputProps = {
   value?: string
   onChange?: (value: string) => void
   error?: string
+  type?: 'text' | 'tel'
 }
 
 export function Input({
@@ -73,6 +75,7 @@ export function Input({
   value = '',
   onChange,
   error,
+  type = 'text',
 }: InputProps) {
   return (
     <label className="ds-input" data-node-id={state === 'Focus' ? '6:19' : '6:15'}>
@@ -82,6 +85,7 @@ export function Input({
         data-node-id={state === 'Focus' ? '6:21' : '6:17'}
         placeholder={placeholder}
         value={value}
+        type={type}
         onChange={(event) => onChange?.(event.target.value)}
         aria-label={label}
         aria-invalid={state === 'Error'}
