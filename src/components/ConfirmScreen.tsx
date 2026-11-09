@@ -21,7 +21,6 @@ export function ConfirmScreen({ onBack, selectedDay = 'Today', selectedTime = '1
   const validPhone = /^\+?[0-9 ()-]{8,}$/.test(phone.trim())
   const nameError = (submitted || touchedName) && !name.trim() ? 'Enter your name.' : undefined
   const phoneError = (submitted || touchedPhone) && !validPhone ? 'Enter a valid phone number.' : undefined
-  const canConfirm = Boolean(name.trim() && validPhone)
 
   const handleConfirm = () => {
     setSubmitted(true)
@@ -55,7 +54,7 @@ export function ConfirmScreen({ onBack, selectedDay = 'Today', selectedTime = '1
         <p className="confirm-screen__helper">We text you when your bike is ready. You pay when you pick it up.</p>
         {confirmed && <p className="confirm-screen__success" role="status">Booking confirmed. We’ll text you when your bike is ready.</p>}
       </section>
-      <ActionBar label={confirmed ? 'Booking confirmed' : 'Confirm booking'} onBook={confirmed ? undefined : handleConfirm} disabled={confirmed || !canConfirm} />
+      <ActionBar label={confirmed ? 'Booking confirmed' : 'Confirm booking'} onBook={confirmed ? undefined : handleConfirm} disabled={confirmed} />
     </main>
   )
 }
