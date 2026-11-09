@@ -185,6 +185,11 @@
   color: var(--color-text);
 }
 
+.ds-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .ds-time-slot {
   min-width: 72px;
   min-height: 46px;

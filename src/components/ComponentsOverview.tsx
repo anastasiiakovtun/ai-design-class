@@ -18,12 +18,14 @@ type ButtonProps = {
   label?: string
   variant?: 'Primary' | 'Secondary'
   onClick?: () => void
+  disabled?: boolean
 }
 
 export function Button({
   label = 'Book this repair',
   variant = 'Primary',
   onClick,
+  disabled = false,
 }: ButtonProps) {
   return (
     <button
@@ -31,6 +33,7 @@ export function Button({
       data-node-id={variant === 'Primary' ? '3:29' : '3:31'}
       type="button"
       onClick={onClick}
+      disabled={disabled}
     >
       {label}
     </button>
@@ -67,6 +70,8 @@ type InputProps = {
   error?: string
   type?: 'text' | 'tel'
   inputRef?: Ref<HTMLInputElement>
+  onFocus?: () => void
+  onBlur?: () => void
 }
 
 export function Input({
@@ -78,6 +83,8 @@ export function Input({
   error,
   type = 'text',
   inputRef,
+  onFocus,
+  onBlur,
 }: InputProps) {
   return (
     <label className="ds-input" data-node-id={state === 'Focus' ? '6:19' : '6:15'}>
@@ -90,6 +97,8 @@ export function Input({
         type={type}
         ref={inputRef}
         onChange={(event) => onChange?.(event.target.value)}
+        onFocus={onFocus}
+        onBlur={onBlur}
         aria-label={label}
         aria-invalid={state === 'Error'}
         aria-describedby={error ? `${label.toLowerCase().replaceAll(' ', '-')}-error` : undefined}
@@ -160,10 +169,10 @@ export function SummaryRow({ label = 'Service', value = 'Flat tyre repair' }: Su
   )
 }
 
-export function ActionBar({ label = 'Book this repair', onBook }: { label?: string; onBook?: () => void }) {
+export function ActionBar({ label = 'Book this repair', onBook, disabled = false }: { label?: string; onBook?: () => void; disabled?: boolean }) {
   return (
     <div className="ds-action-bar" data-node-id="11:37">
-      <Button label={label} onClick={onBook} />
+      <Button label={label} onClick={onBook} disabled={disabled} />
     </div>
   )
 }
