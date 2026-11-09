@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import chevronLeft from '../assets/chevron-left.svg'
 import './ComponentsOverview.css'
 
 type TagProps = {
@@ -89,7 +90,7 @@ export function TopBar({ step = 'Step 1 of 3', title = 'Book a repair' }: TopBar
   return (
     <header className="ds-top-bar" data-node-id="6:24">
       <button className="ds-top-bar__back" type="button" aria-label="Go back">
-        <span aria-hidden="true">‹</span>
+        <img src={chevronLeft} alt="" aria-hidden="true" />
       </button>
       <h1>{title}</h1>
       <span className="ds-top-bar__step">{step}</span>

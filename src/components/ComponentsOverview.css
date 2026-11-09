@@ -168,9 +168,12 @@
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
-  font-family: Arial, sans-serif;
-  font-size: 30px;
-  line-height: 18px;
+}
+
+.ds-top-bar__back img {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 .ds-top-bar h1 {
