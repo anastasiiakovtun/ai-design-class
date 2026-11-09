@@ -1,0 +1,104 @@
+.booking-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: var(--card-width);
+  height: var(--card-height);
+  padding: var(--space-card-padding);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+.booking-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-title-to-description);
+}
+
+.booking-card__title,
+.booking-card__description,
+.booking-card__slot {
+  margin: 0;
+}
+
+.booking-card__title {
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  line-height: var(--line-height-title);
+}
+
+.booking-card__description {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: var(--line-height-body);
+}
+
+.booking-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--pill-height);
+  margin-top: var(--space-description-to-meta);
+}
+
+.booking-card__tags {
+  display: flex;
+  gap: 8px;
+}
+
+.booking-card__tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--pill-height);
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+  font-size: var(--font-size-meta);
+  font-weight: 500;
+  line-height: var(--line-height-meta);
+  white-space: nowrap;
+}
+
+.booking-card__price {
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  line-height: var(--line-height-title);
+  white-space: nowrap;
+}
+
+.booking-card__slot {
+  margin-top: var(--space-meta-to-slot);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-slot);
+  font-weight: 400;
+  line-height: var(--line-height-slot);
+}
+
+.booking-card__action {
+  height: var(--action-height);
+  margin-top: var(--space-slot-to-action);
+  border: 0;
+  border-radius: var(--radius-action);
+  background: var(--color-accent);
+  color: var(--color-surface);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--font-size-action);
+  font-weight: 600;
+  line-height: var(--line-height-action);
+}
+
+.booking-card__action:hover {
+  filter: brightness(0.95);
+}
+
+.booking-card__action:focus-visible {
+  outline: 3px solid var(--color-accent-soft);
+  outline-offset: 2px;
+}
