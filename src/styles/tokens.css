@@ -45,4 +45,8 @@
   --radius-md: 12px;
   --radius-pill: 13px;
   --radius-action: 12px;
+
+  --lift-hover: -2px;
+  --shadow-card-hover: 0 3px 6px rgba(26, 26, 26, 0.06);
+  --motion-fast: 160ms ease;
 }

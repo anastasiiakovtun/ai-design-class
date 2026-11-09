@@ -300,6 +300,7 @@
 }
 
 .ds-service-card {
+  box-sizing: border-box;
   width: 350px;
   max-width: 100%;
   padding: var(--space-16);
@@ -307,6 +308,7 @@
   border-radius: var(--radius-card);
   background: var(--color-surface);
   text-align: left;
+  transition: transform var(--motion-fast), box-shadow var(--motion-fast), border-color var(--motion-fast);
 }
 
 .ds-service-card--selected {
@@ -358,6 +360,19 @@
   background: transparent;
   cursor: pointer;
   text-align: left;
+}
+
+.components-overview__service-trigger:hover .ds-service-card,
+.components-overview__service-trigger:focus-visible .ds-service-card,
+.choose-service-screen__service:hover .ds-service-card,
+.choose-service-screen__service:focus-visible .ds-service-card {
+  transform: translateY(var(--lift-hover));
+  box-shadow: var(--shadow-card-hover);
+}
+
+.components-overview__service-trigger:active .ds-service-card,
+.choose-service-screen__service:active .ds-service-card {
+  transform: translateY(-1px);
 }
 
 .ds-summary-row {
